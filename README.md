@@ -1,73 +1,156 @@
-# Welcome to your Lovable project
+# WB - Finanças
 
-## Project info
+Sistema completo de controle financeiro desenvolvido com React, TypeScript e Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/cb694e3e-a89d-4f16-bceb-a173c295acbb
+## ✨ Funcionalidades
 
-## How can I edit this code?
+### 🔐 Autenticação
+- Login e registro de usuários
+- Controle de permissões (Admin/Usuário)
+- Sessão persistente
 
-There are several ways of editing your application.
+### 📊 Dashboard
+- Resumo financeiro com métricas principais
+- Gráficos de distribuição por categoria
+- Gráfico comparativo mensal (receitas vs despesas)
+- Transações recentes
 
-**Use Lovable**
+### 💰 Movimentações
+- CRUD completo de transações
+- Filtros avançados (data, categoria, tipo, busca)
+- Exportação para PDF
+- Resumo do período filtrado
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/cb694e3e-a89d-4f16-bceb-a173c295acbb) and start prompting.
+### ⚙️ Administração (Apenas Admins)
+- Gerenciamento de usuários
+- Gerenciamento de categorias
+- Gerenciamento de tipos de transação
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🎨 Design System
 
-**Use your preferred IDE**
+- **Tema:** Clean e minimalista com predominância de verde
+- **Componentes:** Baseados em shadcn/ui customizados
+- **Animações:** Framer Motion para transições suaves
+- **Responsividade:** Mobile-first design
+- **Notificações:** Toast notifications integradas
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Tecnologias
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Frontend:** React 18, TypeScript, Vite
+- **Styling:** Tailwind CSS com design system customizado
+- **UI Components:** shadcn/ui
+- **Animações:** Framer Motion
+- **Gráficos:** Recharts
+- **Notificações:** React Toastify
+- **PDF:** jsPDF + html2canvas
+- **Mobile:** Preparado para Capacitor
 
-Follow these steps:
+## 📱 Preparação Mobile
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+O projeto já está configurado para Capacitor:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```json
+{
+  "appId": "app.lovable.cb694e3ea89d4f16bceba173c295acbb",
+  "appName": "WB - Finanças",
+  "webDir": "dist"
+}
 ```
 
-**Edit a file directly in GitHub**
+Para gerar APK:
+1. `npx cap add android`
+2. `npm run build`
+3. `npx cap sync`
+4. `npx cap run android`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🎯 Credenciais de Teste
 
-**Use GitHub Codespaces**
+### Administrador
+- **Usuário:** admin
+- **Senha:** admin123
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Usuário Normal
+- **Usuário:** user
+- **Senha:** user123
 
-## What technologies are used for this project?
+## 🏗️ Arquitetura
 
-This project is built with:
+### Estrutura de Pastas
+```
+src/
+├── components/          # Componentes reutilizáveis
+│   ├── ui/             # Componentes base (shadcn)
+│   ├── Layout.tsx      # Layout principal
+│   ├── Navbar.tsx      # Navegação horizontal
+│   └── StatCard.tsx    # Card de estatísticas
+├── contexts/           # Contextos React
+│   └── AuthContext.tsx # Autenticação
+├── pages/              # Páginas da aplicação
+├── services/           # Serviços e APIs
+│   └── mockApi.ts      # API mock com localStorage
+├── types/              # Definições TypeScript
+└── lib/                # Utilitários
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Gerenciamento de Estado
+- **Autenticação:** Context API
+- **Dados:** Local Storage (simulando backend)
+- **UI State:** React Hooks
 
-## How can I deploy this project?
+## 🎨 Sistema de Cores
 
-Simply open [Lovable](https://lovable.dev/projects/cb694e3e-a89d-4f16-bceb-a173c295acbb) and click on Share -> Publish.
+```css
+/* Paleta Principal */
+--primary: 142 76% 36%;           /* Verde principal */
+--success: 142 76% 36%;           /* Verde sucesso */
+--warning: 45 93% 47%;            /* Amarelo alerta */
+--destructive: 0 75% 55%;         /* Vermelho erro */
 
-## Can I connect a custom domain to my Lovable project?
+/* Gradientes */
+--gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 28%));
+--gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 28%));
+```
 
-Yes, you can!
+## 📊 Funcionalidades dos Gráficos
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Dashboard
+- **Gráfico de Pizza:** Distribuição por categorias
+- **Gráfico de Barras:** Comparativo mensal receitas vs despesas
+- **Cards de Métricas:** Receitas, despesas, saldo e contadores
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Relatórios
+- **Exportação PDF:** Tabela de transações filtradas
+- **Filtros Avançados:** Por período, categoria, tipo e busca textual
+
+## 🔒 Segurança
+
+- Autenticação baseada em roles
+- Proteção de rotas administrativas
+- Validação de formulários
+- Sanitização de dados
+
+## 📱 Responsividade
+
+- **Desktop:** Layout de 3-4 colunas
+- **Tablet:** Layout de 2 colunas
+- **Mobile:** Layout de 1 coluna com menu hambúrguer
+- **Navegação:** Menu horizontal no desktop, dropdown no mobile
+
+## 🎯 Próximos Passos
+
+### Backend Real
+- Implementar API REST com Node.js + Express
+- Banco SQLite com Sequelize ORM
+- Autenticação JWT
+- Hash de senhas com bcrypt
+
+### Funcionalidades Futuras
+- Metas financeiras
+- Lembretes de pagamentos
+- Importação de extratos bancários
+- Modo escuro
+- Notificações push (mobile)
+
+## 📄 Licença
+
+Este projeto foi desenvolvido como um sistema de demonstração e está disponível para uso e modificação.

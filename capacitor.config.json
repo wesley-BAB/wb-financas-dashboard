@@ -1,0 +1,22 @@
+{
+  "appId": "app.lovable.cb694e3ea89d4f16bceba173c295acbb",
+  "appName": "WB - Finanças",
+  "webDir": "dist",
+  "server": {
+    "url": "https://cb694e3e-a89d-4f16-bceb-a173c295acbb.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#22c55e",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#ffffff"
+    }
+  }
+}
