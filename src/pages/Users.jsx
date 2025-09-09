@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, User, Shield, UserCheck } from 'lucide-react';
 import Layout from '@/components/Layout';
-import { usersApi } from '@/services/api';
+import { usersApi } from '@/services/mockApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

@@ -12,7 +12,7 @@ import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, BarChart, Bar,
 import Layout from '@/components/Layout';
 import StatCard from '@/components/StatCard';
 import { useAuth } from '@/contexts/AuthContext';
-import { transactionsApi, categoriesApi, typesApi } from '@/services/api';
+import { transactionsApi, categoriesApi, typesApi } from '@/services/mockApi';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
