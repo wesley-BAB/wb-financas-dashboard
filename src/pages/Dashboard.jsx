@@ -95,7 +95,7 @@ const Dashboard = () => {
     });
   };
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
