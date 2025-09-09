@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, User, Shield, UserCheck } from 'lucide-react';
 import Layout from '@/components/Layout';
-import { usersApi } from '@/services/mockApi';
-import { User as UserType } from '@/types';
+import { usersApi } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,14 +11,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'react-toastify';
 
-const Users: React.FC = () => {
-  const [users, setUsers] = useState<UserType[]>([]);
+const Users = () => {
+  const [users, setUsers] = useState([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<UserType | null>(null);
+  const [editingUser, setEditingUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
-    role: 'normal' as 'admin' | 'normal'
+    role: 'normal'
   });
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const Users: React.FC = () => {
     setEditingUser(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -62,7 +61,7 @@ const Users: React.FC = () => {
     }
   };
 
-  const handleEdit = (user: UserType) => {
+  const handleEdit = (user) => {
     setEditingUser(user);
     setFormData({
       username: user.username,
@@ -71,7 +70,7 @@ const Users: React.FC = () => {
     setIsAddDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
       usersApi.delete(id);
       toast.success('Usuário excluído com sucesso!');
@@ -126,7 +125,7 @@ const Users: React.FC = () => {
                   <Label htmlFor="role">Perfil</Label>
                   <Select
                     value={formData.role}
-                    onValueChange={(value: 'admin' | 'normal') => setFormData({ ...formData, role: value })}
+                    onValueChange={(value) => setFormData({ ...formData, role: value })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione o perfil" />

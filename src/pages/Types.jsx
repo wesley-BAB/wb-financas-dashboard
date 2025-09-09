@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Tag } from 'lucide-react';
 import Layout from '@/components/Layout';
-import { typesApi } from '@/services/mockApi';
-import { Type } from '@/types';
+import { typesApi } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,10 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'react-toastify';
 
-const Types: React.FC = () => {
-  const [types, setTypes] = useState<Type[]>([]);
+const Types = () => {
+  const [types, setTypes] = useState([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingType, setEditingType] = useState<Type | null>(null);
+  const [editingType, setEditingType] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ name: '' });
 
@@ -32,7 +31,7 @@ const Types: React.FC = () => {
     setEditingType(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -55,13 +54,13 @@ const Types: React.FC = () => {
     }
   };
 
-  const handleEdit = (type: Type) => {
+  const handleEdit = (type) => {
     setEditingType(type);
     setFormData({ name: type.name });
     setIsAddDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir este tipo?')) {
       typesApi.delete(id);
       toast.success('Tipo excluído com sucesso!');

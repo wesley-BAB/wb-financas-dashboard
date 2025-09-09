@@ -15,8 +15,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/contexts/AuthContext';
-import { transactionsApi, categoriesApi, typesApi } from '@/services/mockApi';
-import { TransactionWithDetails, Category, Type } from '@/types';
+import { transactionsApi, categoriesApi, typesApi } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,21 +25,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'react-toastify';
 
-const Transactions: React.FC = () => {
+const Transactions = () => {
   const { user } = useAuth();
-  const [transactions, setTransactions] = useState<TransactionWithDetails[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [types, setTypes] = useState<Type[]>([]);
-  const [filteredTransactions, setFilteredTransactions] = useState<TransactionWithDetails[]>([]);
+  const [transactions, setTransactions] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingTransaction, setEditingTransaction] = useState<TransactionWithDetails | null>(null);
+  const [editingTransaction, setEditingTransaction] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const reportRef = useRef<HTMLDivElement>(null);
+  const reportRef = useRef(null);
 
   // Form states
   const [formData, setFormData] = useState({
@@ -110,13 +109,13 @@ const Transactions: React.FC = () => {
     setEditingTransaction(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
       const transactionData = {
-        userId: user!.id,
+        userId: user.id,
         categoryId: formData.categoryId,
         typeId: formData.typeId,
         amount: parseFloat(formData.amount),
@@ -142,7 +141,7 @@ const Transactions: React.FC = () => {
     }
   };
 
-  const handleEdit = (transaction: TransactionWithDetails) => {
+  const handleEdit = (transaction) => {
     setEditingTransaction(transaction);
     setFormData({
       categoryId: transaction.categoryId,
@@ -154,7 +153,7 @@ const Transactions: React.FC = () => {
     setIsAddDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir esta transação?')) {
       transactionsApi.delete(id);
       toast.success('Transação excluída com sucesso!');
@@ -197,7 +196,7 @@ const Transactions: React.FC = () => {
     }
   };
 
-  const formatCurrency = (value: number) => {
+  const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'

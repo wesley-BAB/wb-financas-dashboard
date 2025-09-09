@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, FolderOpen } from 'lucide-react';
 import Layout from '@/components/Layout';
-import { categoriesApi } from '@/services/mockApi';
-import { Category } from '@/types';
+import { categoriesApi } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,10 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'react-toastify';
 
-const Categories: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({ name: '' });
 
@@ -32,7 +31,7 @@ const Categories: React.FC = () => {
     setEditingCategory(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -55,13 +54,13 @@ const Categories: React.FC = () => {
     }
   };
 
-  const handleEdit = (category: Category) => {
+  const handleEdit = (category) => {
     setEditingCategory(category);
     setFormData({ name: category.name });
     setIsAddDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir esta categoria?')) {
       categoriesApi.delete(id);
       toast.success('Categoria excluída com sucesso!');
