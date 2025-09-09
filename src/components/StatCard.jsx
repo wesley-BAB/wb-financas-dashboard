@@ -10,7 +10,7 @@ const StatCard = ({
   gradient = 'gradient-primary',
   delay = 0 
 }) => {
-  const formatValue = (val: string | number) => {
+  const formatValue = (val) => {
     if (typeof val === 'number') {
       return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
