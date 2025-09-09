@@ -1,20 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
 
-interface StatCardProps {
-  title: string;
-  value: string | number;
-  icon: LucideIcon;
-  trend?: {
-    value: number;
-    isPositive: boolean;
-  };
-  gradient?: string;
-  delay?: number;
-}
 
-const StatCard: React.FC<StatCardProps> = ({ 
+const StatCard = ({ 
   title, 
   value, 
   icon: Icon, 

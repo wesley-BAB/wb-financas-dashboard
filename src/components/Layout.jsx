@@ -1,11 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

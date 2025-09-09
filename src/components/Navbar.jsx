@@ -17,7 +17,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
   const filteredNavItems = navItems.filter(item => !item.adminOnly || isAdmin);
 
-  const NavLink: React.FC<{ item: typeof navItems[0]; mobile?: boolean }> = ({ item, mobile = false }) => {
+  const NavLink = ({ item, mobile = false }) => {
     const isActive = location.pathname === item.path;
     const Icon = item.icon;
     

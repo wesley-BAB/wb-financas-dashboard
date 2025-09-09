@@ -12,53 +12,56 @@ import { PieChart as RechartsPieChart, Cell, ResponsiveContainer, BarChart, Bar,
 import Layout from '@/components/Layout';
 import StatCard from '@/components/StatCard';
 import { useAuth } from '@/contexts/AuthContext';
-import { transactionsApi, categoriesApi, typesApi } from '@/services/mockApi';
-import { DashboardStats, TransactionWithDetails } from '@/types';
+import { transactionsApi, categoriesApi, typesApi } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const { user } = useAuth();
-  const [stats, setStats] = useState<DashboardStats>({
+  const [stats, setStats] = useState({
     totalIncome: 0,
     totalExpenses: 0,
     balance: 0,
     transactionCount: 0
   });
-  const [categoryData, setCategoryData] = useState<any[]>([]);
-  const [monthlyData, setMonthlyData] = useState<any[]>([]);
-  const [recentTransactions, setRecentTransactions] = useState<TransactionWithDetails[]>([]);
+  const [categoryData, setCategoryData] = useState([]);
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
 
   useEffect(() => {
     loadDashboardData();
   }, [user]);
 
-  const loadDashboardData = () => {
-    // Load stats
-    const userStats = transactionsApi.getStats(user?.id);
-    setStats(userStats);
+  const loadDashboardData = async () => {
+    try {
+      // Load stats
+      const userStats = await transactionsApi.getStats(user?.id);
+      setStats(userStats);
 
-    // Load transactions for charts
-    const transactions = transactionsApi.getAll(user?.id);
-    setRecentTransactions(transactions.slice(0, 5));
+      // Load transactions for charts
+      const transactions = await transactionsApi.getAll(user?.id);
+      setRecentTransactions(transactions.slice(0, 5));
 
-    // Prepare category data for pie chart
-    const categories = categoriesApi.getAll();
-    const categoryStats = categories.map(cat => {
-      const catTransactions = transactions.filter(t => t.categoryId === cat.id);
-      const total = catTransactions.reduce((sum, t) => sum + t.amount, 0);
-      return {
-        name: cat.name,
-        value: Math.abs(total),
-        color: getRandomColor()
-      };
-    }).filter(item => item.value > 0);
+      // Prepare category data for pie chart
+      const categories = await categoriesApi.getAll();
+      const categoryStats = categories.map(cat => {
+        const catTransactions = transactions.filter(t => t.categoryId === cat.id);
+        const total = catTransactions.reduce((sum, t) => sum + t.amount, 0);
+        return {
+          name: cat.name,
+          value: Math.abs(total),
+          color: getRandomColor()
+        };
+      }).filter(item => item.value > 0);
 
-    setCategoryData(categoryStats);
+      setCategoryData(categoryStats);
 
-    // Prepare monthly data
-    const monthlyStats = getMonthlyData(transactions);
-    setMonthlyData(monthlyStats);
+      // Prepare monthly data
+      const monthlyStats = getMonthlyData(transactions);
+      setMonthlyData(monthlyStats);
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+    }
   };
 
   const getRandomColor = () => {
@@ -66,7 +69,7 @@ const Dashboard: React.FC = () => {
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
-  const getMonthlyData = (transactions: TransactionWithDetails[]) => {
+  const getMonthlyData = (transactions) => {
     const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     const currentYear = new Date().getFullYear();
     
